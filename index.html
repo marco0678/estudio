@@ -20,7 +20,27 @@
         max-height: 80vh;
       }
     </style>
-  </head>
+  </head> 
+  <script>
+  const viewer = document.getElementById("viewer");
+
+  viewer.addEventListener("load", async () => {
+    await viewer.updateComplete;
+
+    const materiales = viewer.model.materials;
+
+    for (const mat of materiales) {
+      if (mat.name === "[Quartz Light Grey]") {
+        // Solo a este material le damos efecto reflectante
+        mat.pbrMetallicRoughness.metallicFactor = 1.0;
+        mat.pbrMetallicRoughness.roughnessFactor = 0.05;
+        console.log(`Material ${mat.name} actualizado`);
+      } else {
+        console.log(`Material ${mat.name} sin cambios`);
+      }
+    }
+  });
+</script>
   <body>
     <model-viewer
       src="estudio.glb"
